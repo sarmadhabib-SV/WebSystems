@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign in — Amoura Vision</title>
+    <link rel="icon" href="assets/logo-mark.svg" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <style>
+      /* Per-page CSS */
+      .auth-shell {
+        border-radius: 22px;
+        padding: 22px;
+      }
+      .auth-card {
+        border-radius: 18px;
+        padding: 18px;
+      }
+      .auth-label {
+        color: rgba(234, 240, 255, 0.78);
+        font-size: 0.9rem;
+      }
+      .auth-input {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        color: var(--text);
+      }
+      .auth-input:focus {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(34, 211, 238, 0.55);
+        box-shadow: 0 0 0 0.25rem rgba(34, 211, 238, 0.12);
+        color: var(--text);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Requirement: minimal HTML (empty div tags only). React renders everything. -->
+    <div id="app"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+      const { useMemo, useState } = React;
+
+      function Shell({ children }) {
+        const year = new Date().getFullYear();
+        return (
+          <React.Fragment>
+            <nav className="navbar navbar-expand-lg navbar-dark py-3">
+              <div className="container">
+                <a className="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                  <span className="brand-mark" aria-hidden="true"></span>
+                  <span className="fw-semibold">Amoura Vision</span>
+                </a>
+                <button
+                  className="navbar-toggler"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navMain"
+                  aria-controls="navMain"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
+                  <span className="navbar-toggler-icon"></span>
+                </button>
+                <div id="navMain" className="collapse navbar-collapse">
+                  <ul className="navbar-nav ms-auto gap-lg-2">
+                    <li className="nav-item">
+                      <a className="nav-link" href="index.html">
+                        Home
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" href="about.html">
+                        About
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" href="contact.html">
+                        Contact
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link active" aria-current="page" href="signin.html">
+                        Sign in
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+
+            <main className="container pb-5">
+              <section className="glass page-hero shadow-soft">
+                <div className="row align-items-center g-4">
+                  <div className="col-12 col-lg-7">
+                    <h1 className="h2 mb-2">Sign in</h1>
+                    <p className="muted mb-0">This page is fully rendered by React components.</p>
+                  </div>
+                  <div className="col-12 col-lg-5">
+                    <img
+                      className="img-fluid rounded-4 border border-white border-opacity-10"
+                      src="assets/hero-vision.svg"
+                      alt="Sign-in illustration"
+                    />
+                  </div>
+                </div>
+              </section>
+
+              <div className="mt-4">{children}</div>
+
+              <footer className="footer">
+                <div className="container px-0 d-flex flex-wrap justify-content-between gap-2">
+                  <div className="small">© {year} Amoura Vision</div>
+                  <div className="small muted">React-powered Sign-in page.</div>
+                </div>
+              </footer>
+            </main>
+          </React.Fragment>
+        );
+      }
+
+      function Field({ id, label, type = "text", value, onChange, placeholder, autoComplete }) {
+        return (
+          <div className="mb-3">
+            <label className="form-label auth-label" htmlFor={id}>
+              {label}
+            </label>
+            <input
+              id={id}
+              className="form-control auth-input"
+              type={type}
+              value={value}
+              onChange={(e) => onChange(e.target.value)}
+              placeholder={placeholder}
+              autoComplete={autoComplete}
+            />
+          </div>
+        );
+      }
+
+      function LoginForm({ login, setLogin, password, setPassword, onSubmit, onShowCreate }) {
+        return (
+          <div className="glass auth-card h-100">
+            <div className="d-flex justify-content-between align-items-start gap-3">
+              <div>
+                <div className="h5 mb-1">Welcome back</div>
+                <div className="small muted">Use your credentials to sign in.</div>
+              </div>
+              <span className="badge text-bg-dark pill">Demo</span>
+            </div>
+            <hr className="border-white border-opacity-10 my-3" />
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                onSubmit();
+              }}
+            >
+              <Field id="login" label="Login" value={login} onChange={setLogin} placeholder="your-login" autoComplete="username" />
+              <Field id="password" label="Password" type="password" value={password} onChange={setPassword} placeholder="••••••••" autoComplete="current-password" />
+              <div className="d-flex flex-wrap gap-2">
+                <button className="btn btn-accent px-4" type="submit">
+                  Submit
+                </button>
+                <button className="btn btn-ghost px-4" type="button" onClick={onShowCreate}>
+                  Create account
+                </button>
+              </div>
+              <div className="small muted mt-3">
+                Note: this is a static front-end demo; submit does not authenticate.
+              </div>
+            </form>
+          </div>
+        );
+      }
+
+      function CreateAccountForm({ onEnter, onCancel, initialLogin, initialPassword }) {
+        const [name, setName] = useState("");
+        const [email, setEmail] = useState("");
+        const [login, setLogin] = useState(initialLogin || "");
+        const [password, setPassword] = useState(initialPassword || "");
+
+        const canEnter = useMemo(() => {
+          return name.trim().length >= 2 && /^\S+@\S+\.\S+$/.test(email.trim()) && login.trim().length >= 2 && password.length >= 4;
+        }, [name, email, login, password]);
+
+        return (
+          <div className="glass auth-card h-100">
+            <div className="d-flex justify-content-between align-items-start gap-3">
+              <div>
+                <div className="h5 mb-1">Create account</div>
+                <div className="small muted">This form appears to the right.</div>
+              </div>
+              <button className="btn btn-ghost btn-sm pill" type="button" onClick={onCancel}>
+                Close
+              </button>
+            </div>
+            <hr className="border-white border-opacity-10 my-3" />
+
+            <Field id="ca-name" label="Name" value={name} onChange={setName} placeholder="Your name" autoComplete="name" />
+            <Field id="ca-email" label="Email" value={email} onChange={setEmail} placeholder="you@company.com" autoComplete="email" />
+            <Field id="ca-login" label="Login" value={login} onChange={setLogin} placeholder="new-login" autoComplete="username" />
+            <Field id="ca-password" label="Password" type="password" value={password} onChange={setPassword} placeholder="Create a password" autoComplete="new-password" />
+
+            <div className="d-flex flex-wrap gap-2">
+              <button
+                className="btn btn-accent px-4"
+                type="button"
+                disabled={!canEnter}
+                onClick={() => onEnter({ login: login.trim(), password })}
+              >
+                Enter
+              </button>
+              <div className="small muted align-self-center">
+                Enter will close this form and fill the login + password.
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      function AuthApp() {
+        const [login, setLogin] = useState("");
+        const [password, setPassword] = useState("");
+        const [showCreate, setShowCreate] = useState(false);
+        const [lastMessage, setLastMessage] = useState("");
+
+        const submit = () => {
+          setLastMessage(`Submitted login "${login || "—"}" (demo only).`);
+          window.setTimeout(() => setLastMessage(""), 3200);
+        };
+
+        const enterCreate = ({ login: newLogin, password: newPassword }) => {
+          setLogin(newLogin);
+          setPassword(newPassword);
+          setShowCreate(false);
+          setLastMessage("Account created (demo). Login form prefilled.");
+          window.setTimeout(() => setLastMessage(""), 3200);
+        };
+
+        return (
+          <Shell>
+            <div className="glass auth-shell">
+              <div className="row g-3 align-items-stretch">
+                <div className={showCreate ? "col-12 col-lg-6" : "col-12"}>
+                  <LoginForm
+                    login={login}
+                    setLogin={setLogin}
+                    password={password}
+                    setPassword={setPassword}
+                    onSubmit={submit}
+                    onShowCreate={() => setShowCreate(true)}
+                  />
+                </div>
+                {showCreate ? (
+                  <div className="col-12 col-lg-6">
+                    <CreateAccountForm
+                      initialLogin={login}
+                      initialPassword={password}
+                      onCancel={() => setShowCreate(false)}
+                      onEnter={enterCreate}
+                    />
+                  </div>
+                ) : null}
+              </div>
+
+              {lastMessage ? (
+                <div className="mt-3 small" style={{ color: "rgba(34, 211, 238, 0.95)" }}>
+                  {lastMessage}
+                </div>
+              ) : null}
+            </div>
+          </Shell>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("app"));
+      root.render(<AuthApp />);
+    </script>
+  </body>
+</html>
+
