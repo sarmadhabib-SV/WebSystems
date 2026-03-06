@@ -61,7 +61,7 @@ Then open `http://localhost:5173/` in a browser.
 #### Part 2 – EC2 + Docker
 
 - **Current EC2 URL**:  
-  `http://100.20.73.107/`
+  `http://100.24.70.137/`
 
 Notes:
 - This points at an EC2 instance running the site inside a Docker container.
@@ -207,7 +207,7 @@ Use `WIKI_OUTLINES_AND_CHECKLISTS.md` as a guide.
 When filling out Canvas:
 
 - **Deployed website URLs**
-  - Part 2 (EC2): `http://100.20.73.107/` (or the latest IP if it changes).
+  - Part 2 (EC2): `http://100.24.70.137/` (or the latest IP if it changes).
   - Part 3 (S3): `http://project1-ws-amouravision.s3-website-us-east-1.amazonaws.com/`
 
 - **GitHub repos**
